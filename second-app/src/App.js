@@ -1,29 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
-
-const title = "My React App";
-let initialState = {
-  title: "My React App",
-  footerText: "footer text",
-  author: {
-  name: "John Doe",
-  phone: "800-555-1212",
-  email: "jdoe@gmail.com",
-  books: [
-    {isbn: '123', title: 'The Time Machine', price: 5.95},
-    {isbn: '456', title: 'The War of the Worlds', price: 6.95},
-    {isbn: '789', title: 'The Invisible Man', price: 4.95}
-  ]
-  }
-}
+import React, { useState } from 'react';
 
 function App() {
-  let state = initialState;
+  const[state, setState] = useState({
+    title: "My React App",
+      footerText: "footer text",
+      color: "blue",
+      message: "",
+      author: {
+      name: "John Doe",
+      phone: "800-555-1212",
+      email: "jdoe@gmail.com",
+      books: [
+        {isbn: '123', title: 'The Time Machine', price: 5.95},
+        {isbn: '456', title: 'The War of the Worlds', price: 6.95},
+        {isbn: '789', title: 'The Invisible Man', price: 4.95}
+      ]
+      }
+    });
+
+    let handleChange = (event) => {
+      state[event.currentTarget.name] = event.currentTarget.value;
+      setState({...state});
+    }
+    function handleButtonClick(event) {
+      state.message = "You like the color " + state.color + "!";
+      setState({...state})
+    }
   return (
     <div className="boxed">
       <Header title={state.title}/>
-      <Body author={state.author}/>
+      <Body {...state} 
+      handleChange={handleChange}
+      handleButtonClick={handleButtonClick}
+      />
       {/*<FragTest />*/}
       <Footer text= {state.footerText} />
       </div>
@@ -49,6 +60,15 @@ function Body(props) {
       <p>Author: {props.author.name}</p>
       <Booklist books={props.author.books} />
       <p>some random text</p>
+      <input type='text' 
+      name='color'
+      value={props.color}
+      onChange = {props.handleChange} />
+      <input
+        type='button'
+        value='click here'
+        onClick = {props.handleButtonClick} />
+        <p>{props.message}</p>
     </div>
   )
 }
