@@ -3,26 +3,51 @@ import './App.css';
 import React from 'react';
 
 const title = "My React App";
+let initialState = {
+  title: "My React App",
+  footerText: "footer text",
+  author: {
+  name: "John Doe",
+  phone: "800-555-1212",
+  email: "jdoe@gmail.com",
+  books: [
+    {isbn: '123', title: 'The Time Machine', price: 5.95},
+    {isbn: '456', title: 'The War of the Worlds', price: 6.95},
+    {isbn: '789', title: 'The Invisible Man', price: 4.95}
+  ]
+  }
+}
 
 function App() {
+  let state = initialState;
   return (
     <div className="boxed">
-      <Header />
-      <Body author={author}/>
+      <Header title={state.title}/>
+      <Body author={state.author}/>
       {/*<FragTest />*/}
-      <Footer text= {footerText} />
+      <Footer text= {state.footerText} />
       </div>
   );
 }
 
-function Header(){
-  return <h3 style={divStyle}>{title}</h3>
+function Booklist(props) {
+  return ( <ul>
+      {props.books.map(
+        (book, index) => {return (
+          <li key={index} >{book.title}</li> )}
+      )}
+    </ul>
+  );
+}
+
+function Header(props){
+  return <h3 style={divStyle}>{props.title}</h3>
 }
 
 function Body(props) {
-  return (
-    <div>
+  return ( <div>
       <p>Author: {props.author.name}</p>
+      <Booklist books={props.author.books} />
       <p>some random text</p>
     </div>
   )
@@ -47,12 +72,6 @@ function ColorList(props) {
           </React.Fragment>
 }
 
-let footerText = "footer text";
-let author = {
-  name: "John Doe",
-  phone: "800-555-1212",
-  email: "jdoe@gmail.com"
-}
 const divStyle = {
   backgroundColor: 'lightgrey',
   margin: '0px',
