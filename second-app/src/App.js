@@ -5,7 +5,7 @@ const title = "My React App";
 
 function App() {
   return (
-    <div className="App">
+    <div className="boxed">
       <Header />
       <Body author={author}/>
       <Footer text= {footerText} />
@@ -14,7 +14,7 @@ function App() {
 }
 
 function Header(){
-  return <h3>{title}</h3>
+  return <h3 style={divStyle}>{title}</h3>
 }
 
 function Body(props) {
@@ -29,7 +29,7 @@ function Body(props) {
 function Footer(props) {
   return (
     <div>
-      <h4>{props.text}</h4>
+      <h4 style={divStyle}>{props.text}</h4>
     </div>
   )
 }
@@ -39,5 +39,11 @@ let author = {
   name: "John Doe",
   phone: "800-555-1212",
   email: "jdoe@gmail.com"
+}
+const divStyle = {
+  backgroundColor: 'lightgrey',
+  margin: '0px',
+  padding: '5px',
+  textAlign: 'center'
 }
 export default App;
